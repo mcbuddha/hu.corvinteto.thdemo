@@ -1,0 +1,10 @@
+{
+  "name": "name",
+  "version": "0.0.0",
+  "main": "skel.js",
+  "dependencies": {
+      "coffee-script": "*",
+      "lodash": "*",
+      "jade": "*"
+  }
+}
