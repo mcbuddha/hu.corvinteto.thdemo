@@ -1,16 +1,18 @@
 .PHONY: static node
 NM=node_modules
+JSLIB=static/js/lib
 
 JADE=$(NM)/jade/bin/jade
 COFFEE=$(NM)/coffee-script/bin/coffee
 
 LODASH=$(NM)/lodash/lodash.min.js
+SOCKETIO=$(NM)/socket.io/node_modules/socket.io-client/dist/socket.io.js
 
 all: static node jades
 
 modules:
 	npm install
-	cp $(LODASH) static/js/lib/
+	cp $(LODASH) $(JSLIB)
 
 static:
 	$(COFFEE) -c static/js/*.coffee
