@@ -22,7 +22,7 @@ jades:
 	$(JADE) static/html/*.jade
 
 start:
-	python2 -m SimpleHTTPServer 8000
+	serve
 
 clean:
 	rm -f *.js

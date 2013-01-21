@@ -5,6 +5,7 @@
   "dependencies": {
       "coffee-script": "*",
       "lodash": "*",
-      "jade": "*"
+      "jade": "*",
+      "serve": "*"
   }
 }
