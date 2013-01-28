@@ -1,30 +1,52 @@
-.PHONY: static node
 NM=node_modules
 JSLIB=static/js/lib
 
-JADE=$(NM)/jade/bin/jade
-COFFEE=$(NM)/coffee-script/bin/coffee
+SERVE_BIN=$(NM)/serve/bin/serve
+JADE_BIN=$(NM)/jade/bin/jade
+COFFEE_BIN=$(NM)/coffee-script/bin/coffee
 
-LODASH=$(NM)/lodash/lodash.min.js
-SOCKETIO=$(NM)/socket.io/node_modules/socket.io-client/dist/socket.io.js
+LODASH_LIB=$(NM)/lodash/lodash.min.js
+SOCKETIO_LIB=$(NM)/socket.io/node_modules/socket.io-client/dist/socket.io.min.js
+ZEPTO_LIB=$(NM)/zepto/zepto.min.js
 
-all: static node jades
+SP=.serve.pid
+CP=.watch.pid
 
-modules:
+JADE=$(wildcard *.jade static/html/*.jade)
+HTML=$(JADE:.jade=.html)
+%.html: %.jade
+	$(JADE_BIN) < $< --path $< > $@
+
+COFFEE=$(wildcard *.coffee static/js/*.coffee)
+JS=$(COFFEE:.coffee=.js)
+%.js: %.coffee
+	$(COFFEE_BIN) -c $<
+
+all: $(HTML) $(JS)
+
+node_modules:
 	npm install
-	cp $(LODASH) $(JSLIB)
+	cp $(LODASH_LIB) $(JSLIB)
+	cp $(SOCKETIO_LIB) $(JSLIB)
+	cp $(ZEPTO_LIB) $(JSLIB)
 
-static:
-	$(COFFEE) -c static/js/*.coffee
-node:
-	$(COFFEE) -c *.coffee
-jades:
-	$(JADE) static/html/*.jade
+run_server:
+	$(SERVE_BIN) & echo "$$!" > $(SP)
+kill_server:
+	kill $(shell cat $(SP))
+	rm $(SP)
 
-start:
-	serve
+run_watch:
+	$(COFFEE_BIN) -cw . & echo "$$!" > $(CP)
+kill_watch:
+	kill $(shell cat $(CP))
+	rm $(CP)
 
 clean:
-	rm -f *.js
-	rm -f static/js/*.js
-	rm -f static/html/*.html
+	rm -f $(HTML) $(JS)
+
+mrproper: clean
+	rm -rf $(NM)
+	rm -f $(JSLIB)/*.js
+
+.PHONY: node_modules run_server kill_server run_watch kill_watch clean mrproper
