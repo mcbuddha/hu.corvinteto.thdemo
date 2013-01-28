@@ -6,6 +6,8 @@
       "coffee-script": "*",
       "lodash": "*",
       "jade": "*",
-      "serve": "*"
+      "serve": "*",
+      "zepto": "*",
+      "socket.io": "*"
   }
 }
