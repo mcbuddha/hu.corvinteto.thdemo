@@ -1,2 +1,14 @@
-*{margin:0;padding:0}
-#view-canvas{background:transparent;position:absolute;top:0;left:0}
+*{margin:0;padding:0;background:#000;}
+.full{width:100%;}
+.fullh{height:100%;}
+.quarth{height:25%;}
+.fl{float:left;}
+.fr{float:right;}
+.bg,.bg > * {background-position:center;
+	     background-repeat:no-repeat;
+	     background-size:100%;}
+
+#source-a{background-image: url('/static/img/a.jpg');}
+#source-b{background-image: url('/static/img/b.jpg');}
+#source-c{background-image: url('/static/img/c.jpg');}
+#source-d{background-image: url('/static/img/d.jpg');}
