@@ -1,7 +1,7 @@
 {
-  "name": "skel",
-  "version": "0.0.0",
-  "main": "skel.js",
+  "name": "thdemo",
+  "version": "0.0.1",
+  "main": "thdemo.js",
   "dependencies": {
       "coffee-script": "*",
       "lodash": "*",
