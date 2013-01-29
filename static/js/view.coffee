@@ -1,22 +1,31 @@
-[API, _, VH] =
+[API, _, $, IO, VH] =
   [window._view = {},
   window._,
+  window.$,
+  window.io,
   window._view_helper]
 
-# canvas width in pixels
-API.a = null
+API.SIO = ':4567' # socket.io port
+API.d = null # window dimension
 
-canvas = null
-context = null
+API.so = sock = null # socket.io socket
+canvas = null # html5 canvas element
+context = null # canvas context
 
 resize = ->
-  API.a = _.min [window.innerWidth, window.innerHeight]
-  [canvas.width, canvas.height] = [API.a, API.a]
-  ___ "resized canvas to #{API.a}x#{API.a}"
+  API.d = [window.innerWidth, window.innerHeight]
+  [canvas.width, canvas.height] = API.d
+  ___ "resized to #{API.d}"
 
-# set up the html5 canvas and callbacks
 API.init = ->
   window.addEventListener 'resize', resize, no
+
   canvas = document.getElementById 'view-canvas'
   context = canvas.getContext '2d'
+
+  API.so = sock = IO.connect API.SIO
+  sock.on 'connect', ->
+    ___ 'connected'
+  sock.on 'message', (d) -> ___ "got #{d}"
+
   resize()
