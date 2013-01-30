@@ -15,13 +15,14 @@ controls_d = null
 
 controls_values = [.5, .5, .5]
 update_controls = (e) ->
+  return if e.type isnt 'touchmove'
   # normalized coordinates
-  nx = (VH.get_x e)/e.toElement.width
-  ny = 1-(VH.get_y e)/e.toElement.height
+  nx = (VH.get_x e)/e.target.width
+  ny = 1-(VH.get_y e)/e.target.height
 
   if nx > 0 and ny > 0
     # update value
-    control_index = Math.floor nx/(1/controls_values.length)
+    control_index = Math.floor nx*controls_values.length % controls_values.length
     controls_values[control_index] = ny
 
     # update canvas
@@ -37,7 +38,7 @@ update_controls = (e) ->
     # update socket
     sock?.emit 'controls', controls_values
 
-on_select = (e) -> sock?.emit 'select', e.toElement.id[-1..-1]
+on_select = (e) -> sock?.emit 'select', e.target.id[-1..-1]
 
 resize = ->
   API.d = [window.innerWidth, window.innerHeight]
@@ -58,7 +59,7 @@ API.init = ->
   controls_canvas = $('#controls')[0]
   controls_context = controls_canvas.getContext '2d'
 
-  VH.add_event_listener controls_canvas, 'down', update_controls
+  #VH.add_event_listener controls_canvas, 'down', update_controls
   VH.add_event_listener controls_canvas, 'move', update_controls
 
   sock = IO.connect API.SIO
