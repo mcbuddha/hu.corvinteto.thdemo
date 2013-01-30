@@ -11,8 +11,8 @@ API.events =
   down: ['mousedown', 'touchstart']
   up: ['mouseup', 'touchend']
   move: ['mousemove', 'touchmove']
-API.get_x = (e, i=0) -> e.offsetX
-API.get_y = (e, i=0) -> e.offsetY
+API.get_x = (e, i=0) -> e.targetTouches?[i].pageX or e.offsetX
+API.get_y = (e, i=0) -> e.targetTouches?[i].pageY or e.offsetY
 API.add_event_listener = (el, event_key, fun) ->
   el.addEventListener event, ((e) ->
     fun e

@@ -45,7 +45,7 @@ resize = ->
 
   $('#sources').width API.d[1]
 
-  controls_d = [0.95*(API.d[0]-API.d[1]), API.d[1]]
+  controls_d = [0.9*(API.d[0]-API.d[1]), API.d[1]]
   [controls_canvas.width, controls_canvas.height] = controls_d
   $('#controls').width controls_d[0]
   ___ "resized to #{API.d}"
