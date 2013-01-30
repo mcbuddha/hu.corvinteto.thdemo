@@ -14,8 +14,10 @@ player = null
 now_playing = null
 
 mkfilter = (d) ->
-  t = (x) -> 4*x - 2
-  "brightness(#{t d[0]}) contrast(#{200* d[1]}%) invert(#{t d[2]})"
+  brightness = Math.floor 100*d[0] - 50
+  contrast = Math.floor 200*d[1]
+  grayscale = Math.floor 100*d[2]
+  "brightness(#{brightness}%) contrast(#{contrast}%) grayscale(#{grayscale}%)"
 
 select = (i) ->
   ___ ['select', i]
