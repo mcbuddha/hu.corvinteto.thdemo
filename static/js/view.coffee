@@ -39,6 +39,7 @@ update_controls = (e) ->
     sock?.emit 'controls', controls_values
 
 on_select = (e) -> sock?.emit 'select', e.target.id[-1..-1]
+on_seek = (e) -> sock?.emit 'seek', e.target.id[5..-1]
 
 resize = ->
   API.d = [window.innerWidth, window.innerHeight]
@@ -48,6 +49,7 @@ resize = ->
   controls_d = [0.9*(API.d[0]-API.d[1]), API.d[1]]
   [controls_canvas.width, controls_canvas.height] = controls_d
   $('#controls').width controls_d[0]
+  $('#seek').width controls_d[0]
   ___ "resized to #{API.d}"
 
 API.init = ->
@@ -55,6 +57,9 @@ API.init = ->
 
   _.each $('#sources > *'), (source) ->
     VH.add_event_listener source, 'down', on_select
+
+  VH.add_event_listener $('#seek-left')[0], 'down', on_seek
+  VH.add_event_listener $('#seek-right')[0], 'down', on_seek
 
   controls_canvas = $('#controls')[0]
   controls_context = controls_canvas.getContext '2d'

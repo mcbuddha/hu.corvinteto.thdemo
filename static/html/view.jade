@@ -11,8 +11,12 @@ html
     link(rel='stylesheet', href='/static/css/view.css')
   body(onload='_view.init()')
     #sources.fullh.fl.bg
-      #source-a.full.quarth &nbsp;
-      #source-b.full.quarth &nbsp;
-      #source-c.full.quarth &nbsp;
-      #source-d.full.quarth &nbsp;
-    canvas#controls.fullh.fr &nbsp;
+      #source-a(style="background-image: url('/static/img/a.jpg');") felhők
+      #source-b(style="background-image: url('/static/img/b.jpg');") space
+      #source-c(style="background-image: url('/static/img/c.jpg');") univerzum
+      #source-d(style="background-image: url('/static/img/d.jpg');") abstract
+      #source-e(style="background-image: url('/static/img/a.jpg');") repülő
+    #seek.fr
+      span#seek-left.seekb <
+      span#seek-right.seekb >
+    canvas#controls(style='height:80%').fr &nbsp;

@@ -42,3 +42,4 @@ API.init = ->
 
   sock.on 'select', (d) -> select sources.indexOf SRC d
   sock.on 'controls', on_controls
+  sock.on 'seek', (d) -> player.currentTime += (if d is 'left' then -10 else 10)

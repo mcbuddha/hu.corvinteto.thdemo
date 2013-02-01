@@ -6,9 +6,16 @@
 .fr{float:right;}
 .bg,.bg > * {background-position:center;
 	     background-repeat:no-repeat;
-	     background-size:100%;}
-
-#source-a{background-image: url('/static/img/a.jpg');}
-#source-b{background-image: url('/static/img/b.jpg');}
-#source-c{background-image: url('/static/img/c.jpg');}
-#source-d{background-image: url('/static/img/d.jpg');}
+	     background-size:100%;
+	     color: rgba(255,255,255,0.5);}
+#sources > * {width:100%;height:20%;}
+#seek{height:19%;}
+.seekb{width:49%;
+       height:100%;
+       display:inline-block;
+       background:#aaa;
+       border-radius:10px;
+       font-size:5em;
+       text-align:center;
+       vertical-align:baseline;
+       font-weight:bold;}
