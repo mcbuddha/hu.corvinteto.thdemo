@@ -8,9 +8,9 @@
 	     background-repeat:no-repeat;
 	     background-size:100%;
 	     color: rgba(255,255,255,0.5);}
-#sources > * {width:100%;height:20%;}
-#seek{height:19%;}
-.seekb{width:49%;
+#sources > * {width:100%;}
+#btns{height:19%;}
+#btns > * {width:19.9%;
        height:100%;
        display:inline-block;
        background:#aaa;

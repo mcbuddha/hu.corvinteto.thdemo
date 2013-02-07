@@ -11,12 +11,10 @@ html
     link(rel='stylesheet', href='/static/css/view.css')
   body(onload='_view.init()')
     #sources.fullh.fl.bg
-      #source-a(style="background-image: url('/static/img/a.jpg');") felhők
-      #source-b(style="background-image: url('/static/img/b.jpg');") space
-      #source-c(style="background-image: url('/static/img/c.jpg');") univerzum
-      #source-d(style="background-image: url('/static/img/d.jpg');") abstract
-      #source-e(style="background-image: url('/static/img/a.jpg');") repülő
-    #seek.fr
-      span#seek-left.seekb <
-      span#seek-right.seekb >
-    canvas#controls(style='height:80%').fr &nbsp;
+    #btns.fr
+      span#slower -
+      span#seek-left <
+      span#pause ||
+      span#seek-right >
+      span#faster +
+    canvas#controls.fr &nbsp;
