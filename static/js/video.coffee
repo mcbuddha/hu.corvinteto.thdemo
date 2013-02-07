@@ -1,15 +1,14 @@
-[API, _, $, IO, VH] =
+[API, _, $, IO, VH, MAP] =
   [window._video = {},
   window._,
   window.$,
   window.io,
-  window._view_helper]
+  window._view_helper,
+  window._map]
 
 API.SIO = ':4567' # socket.io port
 sock = null # socket.io socket
 
-SRC = (d) -> "/static/vid/source-#{d}.webm"
-sources = _.collect ['a','b','c','d'], SRC
 player = null
 now_playing = null
 
@@ -21,8 +20,8 @@ mkfilter = (d) ->
 
 select = (i) ->
   ___ ['select', i]
-  now_playing = i % sources.length
-  player.src = sources[now_playing]
+  now_playing = i % MAP.length
+  player.src = '/static/vid/'+MAP[now_playing][2]
   player.play()
   player.volume = 0
 
@@ -40,6 +39,8 @@ API.init = ->
     sock.emit 'video'
   sock.on 'message', (d) -> ___ "got #{d}"
 
-  sock.on 'select', (d) -> select sources.indexOf SRC d
+  sock.on 'select', (d) -> select MAP.indexOf _.find MAP, (m) -> m[0] is d
   sock.on 'controls', on_controls
   sock.on 'seek', (d) -> player.currentTime += (if d is 'left' then -10 else 10)
+  sock.on 'speed', (d) -> player.playbackRate += (if d is 'slower' then -0.1 else 0.1)
+  sock.on 'pause', (d) -> if player.paused then player.play() else player.pause()

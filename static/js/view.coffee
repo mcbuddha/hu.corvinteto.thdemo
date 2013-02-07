@@ -1,9 +1,10 @@
-[API, _, $, IO, VH] =
+[API, _, $, IO, VH, MAP] =
   [window._view = {},
   window._,
   window.$,
   window.io,
-  window._view_helper]
+  window._view_helper,
+  window._map]
 
 API.SIO = ':4567' # socket.io port
 API.d = null # window dimension
