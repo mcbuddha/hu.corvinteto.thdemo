@@ -16,7 +16,7 @@ controls_d = null
 
 controls_values = [.5, .5, .5]
 update_controls = (e) ->
-  return if e.type isnt 'touchmove'
+  #return if e.type isnt 'touchmove'
   # normalized coordinates
   nx = (VH.get_x e)/e.target.width
   ny = 1-(VH.get_y e)/e.target.height
@@ -44,32 +44,39 @@ VH.frame = ->
     controls_context.strokeRect x0, y0, dw, hi
 
 on_select = (e) -> sock?.emit 'select', e.target.id[-1..-1]
-on_seek = (e) -> sock?.emit 'seek', e.target.id[5..-1]
+on_seek = (e) -> sock?.emit 'seek', e.target.id
+on_speed = (e) -> sock?.emit 'speed', e.target.id
+on_pause = (e) -> sock?.emit 'pause'
 
 resize = ->
   API.d = [window.innerWidth, window.innerHeight]
-
   $('#sources').width API.d[1]
-
-  controls_d = [0.9*(API.d[0]-API.d[1]), API.d[1]]
+  controls_d = [0.9*(API.d[0]-API.d[1]), 0.8*API.d[1]]
   [controls_canvas.width, controls_canvas.height] = controls_d
   $('#controls').width controls_d[0]
-  $('#seek').width controls_d[0]
+  $('#btns').width controls_d[0]
   ___ "resized to #{API.d}"
 
 API.init = ->
   window.addEventListener 'resize', resize, no
 
-  _.each $('#sources > *'), (source) ->
-    VH.add_event_listener source, 'down', on_select
+  _.each MAP, (m) ->
+    src = $("<div id='#{m[0]}'>")
+    src.css 'background-image', "url('/static/img/#{m[3]}')"
+    src.css 'height', "#{Math.floor 100/MAP.length}%"
+    src.text m[1]
+    VH.add_event_listener src[0], 'down', on_select
+    $('#sources').append src
 
   VH.add_event_listener $('#seek-left')[0], 'down', on_seek
   VH.add_event_listener $('#seek-right')[0], 'down', on_seek
+  VH.add_event_listener $('#slower')[0], 'down', on_speed
+  VH.add_event_listener $('#faster')[0], 'down', on_speed
+  VH.add_event_listener $('#pause')[0], 'down', on_pause
 
   controls_canvas = $('#controls')[0]
   controls_context = controls_canvas.getContext '2d'
 
-  #VH.add_event_listener controls_canvas, 'down', update_controls
   VH.add_event_listener controls_canvas, 'move', update_controls
 
   sock = IO.connect API.SIO
