@@ -22,22 +22,26 @@ update_controls = (e) ->
   ny = 1-(VH.get_y e)/e.target.height
 
   if nx > 0 and ny > 0
+    VH.c()
     # update value
     control_index = Math.floor nx*controls_values.length % controls_values.length
     controls_values[control_index] = ny
-
-    # update canvas
-    VH.clr controls_context, controls_d[0], controls_d[1]
-    controls_context.fillStyle = 'rgb(255,255,255)'
-    dw = controls_d[0]/controls_values.length # bar width
-    _.each controls_values, (c,i) ->
-      x0 = i*dw
-      y0 = controls_d[1]*(1-controls_values[i])
-      hi = controls_d[1]*controls_values[i]
-      controls_context.fillRect x0, y0, dw, hi
-
-    # update socket
     sock?.emit 'controls', controls_values
+    VH.f()
+
+VH.frame = ->
+  # update canvas
+  VH.clr controls_context, controls_d[0], controls_d[1]
+  controls_context.fillStyle = 'rgb(255,255,255)'
+  controls_context.strokeStyle = 'rgb(0,0,0)'
+  controls_context.lineWidth = 5
+  dw = controls_d[0]/controls_values.length # bar width
+  _.each controls_values, (c,i) ->
+    x0 = i*dw
+    y0 = controls_d[1]*(1-controls_values[i])
+    hi = controls_d[1]*controls_values[i]
+    controls_context.fillRect x0, y0, dw, hi
+    controls_context.strokeRect x0, y0, dw, hi
 
 on_select = (e) -> sock?.emit 'select', e.target.id[-1..-1]
 on_seek = (e) -> sock?.emit 'seek', e.target.id[5..-1]
